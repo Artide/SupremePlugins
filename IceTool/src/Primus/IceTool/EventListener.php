@@ -27,30 +27,32 @@ class EventListener implements Listener{
 	
 	public function onFreeze(PlayerFreezeEvent $event){
 		$player = $event->getPlayer();
+		if(true){ // <-- ADD PERMISSION ice.be.freezed
 		$this->getMain()->freeze($player);
-		echo "Freezed";
+		}
 	}
 	
 	public function onUnfreeze(PlayerUnfreezeEvent $event){
 		$player = $event->getPlayer();
+		if(true){ // <-- ADD PERMISSION ice.be.unfreezed
 		$this->getMain()->unfreeze($player);
-		echo "Unfreezed";
+		}
+		if($this->getMain()->cfg['SendUnfreezeMessage']){
+			$player->sendMessage(Main::PREFIX." You have been warmed up");
+		}
+		}
 	}
 	
 	public function onMove(PlayerMoveEvent $event){
 		$player = $event->getPlayer();
-		if($this->getMain()->isFrozen($player) || $player->hasPermission('ice.freeze.me')){
-			echo "Frozen";
-			if($event->getFrom() == $event->getTo()){
-				echo "Frozennn"
-				$event->setCancelled(true);
-				$player->sendPopup("You're frozen", 2);
-			}else{
-				echo $event->getFrom().' != '.$event->getTo();
-			}
-		}else{
-			echo 'Player is not frozen or he does not have permission';
+	if($this->getMain()->isFrozen($player)){ // <-- ADD PERMISSION ice.be.frozen
+		if($event->getTo() == $event->getFrom() and $this->getMain()->cfg['AllowLookAround']){ // <-- ADD PERMISSION ice.look.around
+			$event->setCancelled(true);
+			$player->sendPopup(Main::PREFIX." You're frozen"); // <-- ADD TIME LEFT
 		}
+		}
+	/*
+	*  AREAS
+	*/
 	}
-	
 }
