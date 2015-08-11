@@ -1,2 +1,33 @@
 name: IceTool
+description: "Froze people in panic situations"
+main: Primus\IceTool\Main
+api: [1.11.0, 1.12.0, 1.13.0]
+version: 1.0.0
+author: Primus
 
+commands:
+ ice:
+  description: "Head command"
+  usage: "/ice <player | world | players>"
+  permission: ice.command.freeze
+  
+permissions:
+ ice.*:
+  default: OP
+  description: "Top IceTool permission"
+  child:
+   ice.command.*:
+    description: "Top permission for commands"
+    default: OP
+    child:
+     ice.command.freeze:
+      description: "Manage Froze plugin"
+      default: OP
+  ice.freeze.*:
+   description: "Allow all freeze options"
+   default: true
+  ice.unfreeze:
+   description: "Allows unfreeze"
+   default: true
+   
+    
