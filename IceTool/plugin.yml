@@ -23,11 +23,11 @@ permissions:
      ice.command.freeze:
       description: "Manage Froze plugin"
       default: OP
-  ice.freeze.*:
-   description: "Allow all freeze options"
-   default: true
-  ice.unfreeze:
-   description: "Allows unfreeze"
-   default: true
+   ice.freeze.*:
+    description: "Allow all freeze options"
+    default: true
+   ice.unfreeze:
+    description: "Allows unfreeze"
+    default: true
    
     
