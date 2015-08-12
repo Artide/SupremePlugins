@@ -1,6 +1,7 @@
 <?php
 namespace Primus\BlockLogger;
 
+use pocketmine\block\Block;
 use pocketmine\plugin\PluginBase;
 use pocketmine\Player;
 use pocketmine\utils\Config;
@@ -19,7 +20,14 @@ class Main extends PluginBase {
   $this->getLogger()->info('Disabled');
   }
   
-
-
+  public function addBreakedBlock(Block $block, Player $player){
+    $name = $player->getName();
+    
+  }
+  
+  public function addPlacedBlock(Block $block, Player $player){
+    $name = $player->getName();
+    
+  }
 
 }
