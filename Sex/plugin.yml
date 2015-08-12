@@ -14,4 +14,7 @@ permissions:
  sex.cold:
   description: "have low chance to have a baby"
   default: true
+ sex.hot:
+  description: "have a high chance to have a baby"
+  default: false
   
