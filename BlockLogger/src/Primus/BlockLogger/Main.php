@@ -27,7 +27,9 @@ class Main extends PluginBase {
   
   public function addPlacedBlock(Block $block, Player $player){
     $name = $player->getName();
-    
+    $block = $block->getName()." ID: ".$block->getId()." ";
+    $end = "[".time()."] ".$name." placed - ".$block;
+    $this->blocks[] = $end;
   }
 
 }
