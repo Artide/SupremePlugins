@@ -1,0 +1,17 @@
+name: Sex
+api: [1.12.0, 1.13.0, 1.11.0]
+version: 1.0.0
+description: Have a random chance to have a baby xD
+main: Primus\Sex\Main
+
+commands:
+ sex:
+  description: "Have sex with someone"
+  usage: "/sex <player>"
+  default: true
+  
+permissions:
+ sex.cold:
+  description: "have low chance to have a baby"
+  default: true
+  
