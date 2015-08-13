@@ -1,0 +1,5 @@
+name: LobbyTool
+api: 1.0.0
+version: 1.0.0
+main: primus/lobbytool/Main
+description: Run command when you tap sky with compass.
