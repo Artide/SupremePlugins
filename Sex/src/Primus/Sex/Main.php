@@ -1,6 +1,9 @@
 <?php
 namespace Primus\Sex;
 
+use Primus\Sex\event\PlayerSexSuccesfulEvent;
+use Primus\Sex\event\PlayerSexFailedEvent;
+use pocketmine\event\Listener;
 use pocketmine\plugin\PluginBase;
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
@@ -21,6 +24,7 @@ class Main extends PluginBase {
   public function onEnable(){
     $this->cooldown = array();
     $this->createLanguageFile();
+    $this->getServer()->getPluginManager()->registerEvents(EventListener($this), $this);
   }
   public function onDisable(){
     
