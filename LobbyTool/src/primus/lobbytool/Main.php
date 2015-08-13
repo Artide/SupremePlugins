@@ -26,6 +26,12 @@ class Main extends PluginBase implements Listener{
   public function onTap(PlayerInteractEvent $event){
     $player = $event->getPlayer();
     $item = $event->getItem();
+    $block = $event->getBlock();
+    if($block->getFloorX() == $player->getFloorX() || $block->getFloorZ() == $player->getFloorZ() || $block->getFloorY() > $player->getFloorY()){ // Touches block above himself
+      if(array_key_exists($item->getId(), $this->config['items'])){
+        $this->executeCommands($player, $this->config['items'][$item->getId()]);
+      }
+    }
   }
   
   public function executeCommands(Player $player, array $commands){
