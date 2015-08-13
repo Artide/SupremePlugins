@@ -10,10 +10,17 @@ use pocketmine\Player;
 class Main extends PluginBase {
   
   public $cooldown;
+  public $player;
+  public $victim;
+  
+  protected $lang;
+  
   const PREFIX = '[SEX]'; // PREFIX SHOULD BE CONFIGURED THROUGH CONFIG
+  const LANGUAGE = 'en';
   
   public function onEnable(){
     $this->cooldown = array();
+    $this->createLanguageFile();
   }
   public function onDisable(){
     
@@ -24,18 +31,23 @@ class Main extends PluginBase {
       if(isset($args[0])){
        $player = $this->getServer()->getPlayer($args);
        if($player instanceof Player){
-          if(isset($this->cooldown[$sender->getName()])){
-           if($this->cooldown[$sender->getName()] < time()){
+          $cooldown = (isset($this->cooldown[$sender]) ? $this->cooldown[$sender->getName()] : time()); // Will work?
+           if($this->cooldown[$sender->getName()] <= time()){ // <= !! <
             if($this->getChance()){
               // HAVE SEX xD
+              $this->player = $sender;
+              $this->victim = $player;
+              $this->getServer()->getPluginManager()->callEvent(new PlayerSexSuccesfulEvent($sender, $player));
+              return true;
+            }else{
+              $this->player = $sender;
+              $this->victim = $player;
+              $this->getServer()->getPluginManager()->callEvent(new PlayerSexFailedEvent($sender, $player));
             }
             }else{
              $sender->sendMessage(self::PREFIX.' Relax you need to chill');
              return true;
             }
-           }else{
-             // COOLDOWN NOT ADDED
-           }
            }else{
             $sender->sendMessage(self::PREFIX.' '.$args[0].' was not found on server'); 
            }
@@ -46,7 +58,8 @@ class Main extends PluginBase {
     }
   }
 
-  public function getChance($type='small'){
+  public function getChance($type='undefined'){
+    $type = $type === 'undefined' ? $type = $this->cfg['DefaultChance'] : $type;
     switch($type){
      case 'small':
        if(rand(1, 10) === 5) return true;
@@ -63,7 +76,37 @@ class Main extends PluginBase {
     case 'sure':
       return true;
       break;
+    default:
+      return false;
+      $this->getLogger()->alert('Invalid chance given inside config');
+      break;
     }
     }
-
+    
+    public function createLanguageFile(){
+      switch(self::LANGUAGE){
+        case "en":
+      $lang = array(
+        'SexSuccesful' => '{PLAYER} made baby with {VICTIM}.',
+        'SexFailed' => '{PLAYER} tried to have sex with {VICTIM} but failed'm
+        'Cooldown' => 'Relax, you need to chill',
+        );
+      $this->lang = new Config($this->getDataFolder()."language.en". Config::YAML, $lang);
+      return true;
+      break;
+      }
+    }
+    
+    public function getLang($needle){
+      // Logger::ALERT instead ??
+      if($this->lang == null) return '[!] Could not load language file';
+      $res = $this->lang->get($needle);
+      if($res){
+       $msg = str_replace(['{PLAYER}, {VICTIM}'], [$this->player, $this->victim], $res);
+       return $msg;
+      }else{
+       return '[!] Could not find \''.$needle.'\' was not found in language file' ;
+      }
+      }
+   
 }
