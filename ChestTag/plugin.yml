@@ -1,0 +1,12 @@
+name: ChestTag
+author: Primus
+api: [1.12.0, 1.13.0]
+version: 1.0.0
+main: primus\chesttag\CTMain
+description: "Give your placed chest name"
+
+commands:
+ ct:
+  description: 'Give your chest a name tag'
+  default: true
+  permission: chesttag.command
