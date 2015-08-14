@@ -92,7 +92,7 @@ class Main extends PluginBase {
         case "en":
       $lang = array(
         'SexSuccesful' => '{PLAYER} made baby with {VICTIM}.',
-        'SexFailed' => '{PLAYER} tried to have sex with {VICTIM} but failed'm
+        'SexFailed' => '{PLAYER} tried to have sex with {VICTIM} but failed'
         'Cooldown' => 'Relax, you need to chill',
         );
       $this->lang = new Config($this->getDataFolder()."language.en". Config::YAML, $lang);
@@ -103,7 +103,7 @@ class Main extends PluginBase {
     
     public function getLang($needle){
       // Logger::ALERT instead ??
-      if($this->lang == null) return '[!] Could not load language file';
+      if($this->lang === null) return '[!] Could not load language file';
       $res = $this->lang->get($needle);
       if($res){
        $msg = str_replace(['{PLAYER}, {VICTIM}'], [$this->player, $this->victim], $res);
