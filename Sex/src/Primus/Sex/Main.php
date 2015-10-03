@@ -33,9 +33,9 @@ class Main extends PluginBase {
   public function onCommand(CommandSender $sender, Command $command, $labe, array $args){
     if(strtolower($command->getName()) === 'sex'){
       if(isset($args[0])){
-       $player = $this->getServer()->getPlayer($args);
+       $player = $this->getServer()->getPlayer($args[0]);
        if($player instanceof Player){
-          $cooldown = (isset($this->cooldown[$sender]) ? $this->cooldown[$sender->getName()] : time()); // Will work?
+          $cooldown = (isset($this->cooldown[$sender]) ? $this->cooldown[$sender->getName()] : time()); // Won't work because $sender will return nothing without getting name
            if($this->cooldown[$sender->getName()] <= time()){ // <= !! <
             if($this->getChance()){
               // HAVE SEX xD
@@ -66,15 +66,15 @@ class Main extends PluginBase {
     $type = $type === 'undefined' ? $type = $this->cfg['DefaultChance'] : $type;
     switch($type){
      case 'small':
-       if(rand(1, 10) === 5) return true;
+       if(mt_rand(1, 10) === 5) return true;
        return false;
        break;
     case 'medium':
-      if(rand(1, 5) === 3) return true;
+      if(mt_rand(1, 5) === 3) return true;//mt_rand() is 3 times faster then using rand()
       return false;
       break;
     case 'big':
-      if(rand(1, 3) === 1) return true;
+      if(mt_rand(1, 3) === 1) return true;
       return false;
       break;
     case 'sure':
